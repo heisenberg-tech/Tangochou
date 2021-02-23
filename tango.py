@@ -76,11 +76,13 @@ class Application(tk.Frame):
             self.text.set(list(tango_dict.keys())[self.count])
             self.text_judge.set("")
             self.entry_user.delete(0, tk.END)
-        else:
+        elif self.count == length - 2:
             self.count += 1
             self.text.set("Finish")
             self.label.configure(background='red')
             self.text_judge.set("Everything is done!")
+        else:
+            pass
 
     def back_word(self):
         if self.count > 0:
@@ -89,11 +91,13 @@ class Application(tk.Frame):
             self.text.set(list(tango_dict.keys())[self.count])
             self.text_judge.set("")
             self.entry_user.delete(0, tk.END)
-        else:
+        elif self.count == 0:
             self.count -= 1
             self.text.set("Nothing to back.")
             self.label.configure(background='red')
             self.text_judge.set("Everything is done!")
+        else:
+            pass
 
 
     def show_kaitou(self):
