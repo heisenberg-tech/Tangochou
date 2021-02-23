@@ -13,7 +13,7 @@ class Application(tk.Frame):
         self.count = 0
         self.entry_user = tk.Entry()
         tk.Frame.__init__(self, master)
-        self.master.geometry("250x350")
+        self.master.geometry("250x380")
         self.pack(expand = 1, fill = tk.BOTH, anchor = tk.NW)
         self.display_word()
         self.createWidgets()
@@ -32,7 +32,7 @@ class Application(tk.Frame):
         self.label_judge.pack()
     
     def callback(self,i):
-        print(str(i)+"が押されました")
+        print(str(i)+"is clicked")
         self.num = str(i)
 
     def createWidgets(self):
@@ -46,6 +46,7 @@ class Application(tk.Frame):
         self.btn4 = tk.Button(text='4', command=lambda:[self.callback(4.0),self.judge()], height=1,width=10).pack(expand = 1, fill = tk.BOTH, anchor = tk.NW)
         self.btn5 = tk.Button(text='5', command=lambda:[self.callback(5.0),self.judge()], height=1,width=10).pack(expand = 1, fill = tk.BOTH, anchor = tk.NW)
         self.btn_Next = tk.Button(text='Next', command=lambda:[self.change_word()], height=1,width=10,bg = "blue").pack(expand = 1, fill = tk.BOTH, anchor = tk.NW)
+        self.btn_Next = tk.Button(text='Back', command=lambda:[self.back_word()], height=1,width=10,bg = "blue").pack(expand = 1, fill = tk.BOTH, anchor = tk.NW)
         self.btn_Kaito = tk.Button(text='Knowledge', command=lambda:[self.show_kaitou()], height=1,width=10).pack(expand = 1, fill = tk.BOTH, anchor = tk.NW)
 
     def judge(self):
@@ -70,17 +71,33 @@ class Application(tk.Frame):
 
     def change_word(self):
         if self.count < length - 2:
+            self.label.configure(background='white')
             self.count += 1
             self.text.set(list(tango_dict.keys())[self.count])
             self.text_judge.set("")
             self.entry_user.delete(0, tk.END)
         else:
-            self.text.set("終了")
+            self.count += 1
+            self.text.set("Finish")
             self.label.configure(background='red')
             self.text_judge.set("Everything is done!")
 
+    def back_word(self):
+        if self.count > 0:
+            self.label.configure(background='white')
+            self.count -= 1
+            self.text.set(list(tango_dict.keys())[self.count])
+            self.text_judge.set("")
+            self.entry_user.delete(0, tk.END)
+        else:
+            self.count -= 1
+            self.text.set("Nothing to back.")
+            self.label.configure(background='red')
+            self.text_judge.set("Everything is done!")
+
+
     def show_kaitou(self):
-        messagebox.showinfo('確認', list(tango_dict.values())[self.count][2])
+        messagebox.showinfo('Reference', list(tango_dict.values())[self.count][2])
 
 if __name__ == "__main__":
     root = tk.Tk().title("TangoChou")
